@@ -1,0 +1,1410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NAYZEEE Docs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@200..700&display=swap">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" defer></script>
+<script>
+  // apply the saved theme before first paint
+  try { const t = localStorage.getItem('nz-docs-theme'); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+</script>
+<style>
+/* ═══════════════════════════════════════════════════════════
+   NAYZEEE DOCS
+   Palette: black · white · teal #08afa2 · red #e5484d
+   Type: Lexend
+   ═══════════════════════════════════════════════════════════ */
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+
+  /* light */
+  --bg:#f4f6f6; --base:#ffffff; --panel:#ffffff; --raise:#eef1f1; --raise-2:#e4e8e8; --inset:#f2f4f4;
+  --line:rgba(10,14,16,.13); --line-soft:rgba(10,14,16,.08); --line-hair:rgba(10,14,16,.05); --lift:rgba(255,255,255,.7);
+  --head:#07090a; --ink:#1b1f21; --text:#3b4246; --ink-2:#555d62; --ink-3:#848c91;
+  --teal:#08afa2; --teal-ink:#067d74; --teal-wash:rgba(8,175,162,.10); --teal-edge:rgba(8,175,162,.38);
+  --red:#e5484d; --red-lo:#b8262b; --red-wash:rgba(229,72,77,.09); --red-edge:rgba(229,72,77,.36);
+  --amber:#c98d00; --amber-wash:rgba(229,165,10,.12); --amber-edge:rgba(229,165,10,.4);
+  --code-bg:#0e1011; --code-bar:#15181a; --code-line:rgba(255,255,255,.08);
+  --topbar:rgba(255,255,255,.82);
+  --ds:0 1px 2px rgba(10,14,16,.06),0 8px 24px rgba(10,14,16,.06);
+  --grain-o:0;
+
+  --r-xs:4px; --r-sm:6px; --r-md:10px; --r-lg:14px;
+  --fast:140ms cubic-bezier(.4,0,.2,1);
+  --top:60px;
+  --grain:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#000000; --base:#08090a; --panel:#0e1011; --raise:#15181a; --raise-2:#1c2023; --inset:#0b0c0d;
+    --line:rgba(255,255,255,.10); --line-soft:rgba(255,255,255,.06); --line-hair:rgba(255,255,255,.035); --lift:rgba(255,255,255,.055);
+    --head:#ffffff; --ink:#f2f4f5; --text:#b8bec2; --ink-2:#9ea5aa; --ink-3:#63696d;
+    --teal-ink:#0fd4c4; --teal-wash:rgba(8,175,162,.11); --teal-edge:rgba(8,175,162,.34);
+    --red-wash:rgba(229,72,77,.11); --red-edge:rgba(229,72,77,.34);
+    --amber:#e5a50a; --amber-wash:rgba(229,165,10,.10); --amber-edge:rgba(229,165,10,.34);
+    --code-bg:#0b0c0d; --code-bar:#101213; --code-line:rgba(255,255,255,.06);
+    --topbar:rgba(0,0,0,.72);
+    --ds:0 2px 4px rgba(0,0,0,.5),0 12px 28px rgba(0,0,0,.45);
+    --grain-o:.035;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#000000; --base:#08090a; --panel:#0e1011; --raise:#15181a; --raise-2:#1c2023; --inset:#0b0c0d;
+  --line:rgba(255,255,255,.10); --line-soft:rgba(255,255,255,.06); --line-hair:rgba(255,255,255,.035); --lift:rgba(255,255,255,.055);
+  --head:#ffffff; --ink:#f2f4f5; --text:#b8bec2; --ink-2:#9ea5aa; --ink-3:#63696d;
+  --teal-ink:#0fd4c4; --teal-wash:rgba(8,175,162,.11); --teal-edge:rgba(8,175,162,.34);
+  --red-wash:rgba(229,72,77,.11); --red-edge:rgba(229,72,77,.34);
+  --amber:#e5a50a; --amber-wash:rgba(229,165,10,.10); --amber-edge:rgba(229,165,10,.34);
+  --code-bg:#0b0c0d; --code-bar:#101213; --code-line:rgba(255,255,255,.06);
+  --topbar:rgba(0,0,0,.72);
+  --ds:0 2px 4px rgba(0,0,0,.5),0 12px 28px rgba(0,0,0,.45);
+  --grain-o:.035;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{height:100%;scroll-padding-top:calc(var(--top) + 24px + env(safe-area-inset-top,0px));-webkit-text-size-adjust:100%}
+body{
+  min-height:100%;background:var(--bg);color:var(--ink);
+  font-family:'Lexend',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;font-weight:350;font-size:15px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:200;opacity:var(--grain-o);background-image:var(--grain)}
+a{color:var(--teal-ink);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+button{font:inherit;color:inherit;border:0;background:none;cursor:pointer}
+input{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px;border-radius:3px}
+.svg-inline--fa{height:1em}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+/* chamfer frame: 1px border that follows the cut corner */
+.fr{padding:1px;background:var(--line);border-radius:var(--r-sm);clip-path:polygon(0 0,100% 0,100% calc(100% - var(--cut,12px)),calc(100% - var(--cut,12px)) 100%,0 100%)}
+.fr > .in{background:var(--panel);border-radius:calc(var(--r-sm) - 1px);clip-path:polygon(0 0,100% 0,100% calc(100% - var(--cut,12px) + .4px),calc(100% - var(--cut,12px) + .4px) 100%,0 100%);height:100%}
+
+/* ═══════════════ TOP BAR ═══════════════ */
+.top{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:50;height:var(--top);
+  display:flex;align-items:center;gap:18px;padding:0 22px;
+  background:var(--topbar);backdrop-filter:blur(14px) saturate(1.2);-webkit-backdrop-filter:blur(14px) saturate(1.2);
+  border-bottom:1px solid var(--line-soft);
+}
+.top::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(8,175,162,0) 55%)}
+.menu-btn{display:none;width:36px;height:36px;border-radius:var(--r-sm);color:var(--ink-2);font-size:16px}
+.menu-btn:hover{background:var(--raise)}
+.brand{display:flex;align-items:center;gap:11px;color:var(--head);flex:none}
+.brand:hover{text-decoration:none}
+.mark{
+  width:28px;height:28px;display:grid;place-items:center;background:var(--teal);color:#000;
+  font-weight:700;font-size:14px;border-radius:5px;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%);
+}
+.brand b{font-weight:650;font-size:15px;letter-spacing:.06em}
+.brand .dl{font-weight:300;font-size:14px;color:var(--ink-3);padding-left:11px;border-left:1px solid var(--line)}
+.search-trigger{
+  margin-left:18px;flex:0 1 340px;height:36px;display:flex;align-items:center;gap:10px;padding:0 8px 0 12px;
+  border-radius:var(--r-sm);background:var(--inset);border:1px solid var(--line-soft);color:var(--ink-3);font-size:13.5px;font-weight:300;
+  transition:border-color var(--fast);
+}
+.search-trigger:hover{border-color:var(--teal-edge)}
+.search-trigger .lbl{flex:1;text-align:left}
+.kbd{
+  display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:21px;padding:0 6px;border-radius:4px;
+  background:var(--raise);border:1px solid var(--line);color:var(--ink-2);font-size:11px;font-weight:500;line-height:1;
+  box-shadow:inset 0 -1.5px 0 var(--line);
+}
+.top-links{margin-left:auto;display:flex;align-items:center;gap:4px}
+.tl{height:34px;padding:0 12px;display:flex;align-items:center;gap:8px;border-radius:var(--r-sm);color:var(--ink-2);font-size:13.5px;font-weight:400}
+.tl:hover{background:var(--raise);color:var(--head);text-decoration:none}
+.tl.discord{color:var(--teal-ink)}
+.icon-btn{width:34px;height:34px;display:grid;place-items:center;border-radius:var(--r-sm);color:var(--ink-2)}
+.icon-btn:hover{background:var(--raise);color:var(--head)}
+.search-icon-btn{display:none}
+
+/* ═══════════════ SHELL ═══════════════ */
+.shell{display:grid;grid-template-columns:280px minmax(0,1fr) 236px;max-width:1480px;margin:0 auto}
+.shell.wide{grid-template-columns:280px minmax(0,1fr)}
+.shell.wide .toc{display:none}
+
+/* sidebar */
+.side{
+  position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));height:calc(100dvh - var(--top) - env(safe-area-inset-top,0px));
+  overflow-y:auto;padding:22px 14px 40px 18px;border-right:1px solid var(--line-hair);
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+}
+.side-group{margin-bottom:22px}
+.side-label{padding:0 10px 7px;font-size:12px;font-weight:500;color:var(--ink-3);letter-spacing:.01em}
+.side-link{
+  display:flex;align-items:center;gap:10px;min-height:34px;padding:5px 10px;border-radius:var(--r-sm);
+  color:var(--ink-2);font-size:14px;font-weight:350;line-height:1.35;position:relative;
+}
+.side-link:hover{background:var(--raise);color:var(--head);text-decoration:none}
+.side-link.on{background:var(--teal-wash);color:var(--head);font-weight:450}
+.side-link.on::before{content:'';position:absolute;left:0;top:7px;bottom:7px;width:2px;border-radius:2px;background:var(--teal)}
+.side-link .ic{width:16px;text-align:center;font-size:13px;color:var(--ink-3);flex:none}
+.side-link.on .ic{color:var(--teal-ink)}
+.script-link{font-weight:450;color:var(--ink)}
+.script-link .tile{width:24px;height:24px;flex:none;border-radius:5px;display:grid;place-items:center;font-size:11.5px;background:var(--raise);border:1px solid var(--line-soft);color:var(--ink-2)}
+.script-link.open .tile{background:var(--teal-wash);border-color:var(--teal-edge);color:var(--teal-ink)}
+.script-link .nm{flex:1;min-width:0}
+.script-link .chev{font-size:10px;color:var(--ink-3);transition:transform var(--fast)}
+.script-link.open .chev{transform:rotate(90deg)}
+.tag{flex:none;font-size:10.5px;font-weight:500;padding:1px 7px;border-radius:var(--r-xs);border:1px solid var(--line);color:var(--ink-3);line-height:1.6}
+.tag.teal{color:var(--teal-ink);border-color:var(--teal-edge);background:var(--teal-wash)}
+.sub{margin:2px 0 8px 22px;padding-left:12px;border-left:1px solid var(--line-soft)}
+.sub .side-link{font-size:13.5px;min-height:31px}
+.scrim{display:none}
+
+/* content */
+.main{min-width:0;padding:40px 56px 96px}
+.doc{max-width:780px;margin:0 auto}
+.shell.wide .doc{max-width:1060px}
+
+/* ═══════════════ HOME ═══════════════ */
+.hero{position:relative;margin:-40px -56px 44px;padding:72px 56px 56px;overflow:hidden;border-bottom:1px solid var(--line-hair)}
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(60% 90% at 8% 0%,rgba(8,175,162,.16),rgba(8,175,162,0) 70%),
+    linear-gradient(var(--line-hair) 1px,transparent 1px) 0 0/100% 56px;
+  -webkit-mask-image:linear-gradient(#000 40%,transparent);mask-image:linear-gradient(#000 40%,transparent);
+}
+.hero-in{position:relative;max-width:1060px;margin:0 auto}
+.hero h1{font-size:clamp(40px,6vw,68px);line-height:1.02;font-weight:600;letter-spacing:-.04em;color:var(--head)}
+.hero p{margin-top:18px;max-width:52ch;font-size:17px;line-height:1.6;color:var(--text);font-weight:300}
+.hero-search{margin-top:30px;max-width:560px;--cut:16px;display:block;width:100%;text-align:left;box-shadow:none}
+.hero-search .in{display:flex;align-items:center;gap:14px;height:56px;padding:0 14px 0 18px;background:var(--base);color:var(--ink-3);font-size:15.5px;font-weight:300}
+.hero-search .in .lbl{flex:1}
+.hero-search .fa-magnifying-glass{color:var(--teal-ink);font-size:15px}
+.hero-search:hover{background:var(--teal-edge)}
+.quick{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:22px}
+.quick a{display:flex;align-items:center;gap:8px;color:var(--ink-2);font-size:14px;font-weight:400}
+.quick a svg{color:var(--teal-ink)}
+.quick a:hover{color:var(--head)}
+
+.cat{margin-top:52px}
+.cat:first-of-type{margin-top:0}
+.cat-head{display:flex;align-items:baseline;justify-content:space-between;gap:20px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line-soft)}
+.cat-head h2{font-size:20px;font-weight:600;letter-spacing:-.015em;color:var(--head)}
+.cat-head p{font-size:13.5px;color:var(--ink-3);font-weight:300}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.card{display:block;color:inherit;--cut:14px;transition:background var(--fast)}
+.card:hover{text-decoration:none;background:var(--teal-edge)}
+.card .in{position:relative;display:flex;flex-direction:column;padding:20px 20px 16px;background:var(--panel)}
+.card .in::after{content:'';position:absolute;left:0;right:0;top:0;height:1px;background:var(--lift)}
+.card-top{display:flex;align-items:center;gap:12px}
+.tile-lg{width:38px;height:38px;flex:none;border-radius:var(--r-sm);display:grid;place-items:center;font-size:16px;background:var(--teal-wash);border:1px solid var(--teal-edge);color:var(--teal-ink)}
+.card.soon .tile-lg{background:var(--raise);border-color:var(--line-soft);color:var(--ink-3)}
+.card h3{font-size:16px;font-weight:550;color:var(--head);letter-spacing:-.01em;line-height:1.25}
+.card .rid{font-size:12px;color:var(--ink-3);font-weight:300;margin-top:2px}
+.card p{margin-top:13px;font-size:13.5px;line-height:1.6;color:var(--text);font-weight:300;flex:1}
+.card-foot{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:16px;padding-top:12px;border-top:1px solid var(--line-hair)}
+.card-foot .meta{margin-left:auto;font-size:12px;color:var(--ink-3);font-weight:300}
+.chip{font-size:11px;font-weight:450;padding:2px 8px;border-radius:var(--r-xs);background:var(--raise);border:1px solid var(--line-soft);color:var(--ink-2);line-height:1.55}
+
+/* ═══════════════ PAGE ═══════════════ */
+.crumbs{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-3);font-weight:300;margin-bottom:14px}
+.crumbs a{color:var(--ink-3)}
+.crumbs a:hover{color:var(--head)}
+.crumbs .sep{font-size:9px;opacity:.7}
+.page-head{padding-bottom:26px;margin-bottom:8px;border-bottom:1px solid var(--line-soft)}
+.page-head h1{font-size:clamp(28px,4vw,38px);line-height:1.12;font-weight:600;letter-spacing:-.028em;color:var(--head)}
+.page-head .lead{margin-top:12px;font-size:16.5px;line-height:1.6;color:var(--text);font-weight:300;max-width:62ch}
+.page-actions{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:18px}
+.btn{
+  height:32px;padding:0 12px;display:inline-flex;align-items:center;gap:8px;border-radius:var(--r-sm);
+  border:1px solid var(--line);background:var(--panel);color:var(--ink-2);font-size:13px;font-weight:400;
+  transition:border-color var(--fast),color var(--fast),background var(--fast);
+}
+.btn:hover{border-color:var(--teal-edge);color:var(--head);text-decoration:none}
+.btn.solid{background:var(--teal);border-color:var(--teal);color:#00201d;font-weight:500}
+.btn.solid:hover{filter:brightness(1.08);color:#00201d}
+
+.prose h2{
+  position:relative;margin:52px 0 14px;font-size:23px;line-height:1.25;font-weight:600;letter-spacing:-.02em;color:var(--head);
+}
+.prose h3{position:relative;margin:34px 0 10px;font-size:17px;line-height:1.35;font-weight:550;letter-spacing:-.01em;color:var(--head)}
+.prose h2:first-child,.prose h3:first-child{margin-top:28px}
+.prose h2 .anchor,.prose h3 .anchor{position:absolute;left:-24px;top:0;padding-right:8px;color:var(--ink-3);opacity:0;font-weight:400;transition:opacity var(--fast)}
+.prose h2:hover .anchor,.prose h3:hover .anchor{opacity:1;text-decoration:none}
+.prose p{margin:14px 0;color:var(--text)}
+.prose > p:first-child{margin-top:28px}
+.prose strong{color:var(--ink);font-weight:550}
+.prose :not(pre) > code,.cell code{
+  font-family:ui-monospace,'SF Mono','Cascadia Code',Consolas,monospace;font-size:.86em;
+  padding:1.5px 6px;border-radius:4px;background:var(--raise);border:1px solid var(--line-soft);color:var(--ink);white-space:nowrap;
+}
+.prose ul.list{margin:14px 0;padding-left:0;list-style:none}
+.prose ul.list li{position:relative;padding-left:22px;margin:7px 0;color:var(--text)}
+.prose ul.list li::before{content:'';position:absolute;left:4px;top:.72em;width:6px;height:6px;border-radius:1.5px;background:var(--teal);transform:rotate(45deg)}
+
+/* hint */
+.hint{margin:20px 0;--cut:10px}
+.hint .in{position:relative;display:flex;gap:13px;padding:14px 18px 14px 16px;background:var(--panel)}
+.hint .in::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--hc)}
+.hint .hi{flex:none;width:26px;height:26px;border-radius:var(--r-xs);display:grid;place-items:center;font-size:12px;color:var(--hc);background:var(--hw);border:1px solid var(--he);margin-top:1px}
+.hint .ht{flex:1;min-width:0;font-size:14.5px;line-height:1.65;color:var(--text)}
+.hint .ht b{display:block;color:var(--head);font-weight:550;margin-bottom:2px}
+.hint.info{--hc:var(--teal-ink);--hw:var(--teal-wash);--he:var(--teal-edge)}
+.hint.success{--hc:var(--teal-ink);--hw:var(--teal-wash);--he:var(--teal-edge)}
+.hint.warning{--hc:var(--amber);--hw:var(--amber-wash);--he:var(--amber-edge)}
+.hint.danger{--hc:var(--red);--hw:var(--red-wash);--he:var(--red-edge)}
+.hint.warning .in{background:linear-gradient(90deg,var(--amber-wash),var(--panel) 40%)}
+.hint.danger .in{background:linear-gradient(90deg,var(--red-wash),var(--panel) 40%)}
+
+/* code */
+.code{margin:18px 0;--cut:12px;background:var(--code-line)}
+.code > .in{background:var(--code-bg)}
+.code-bar{display:flex;align-items:center;gap:10px;height:40px;padding:0 8px 0 14px;background:var(--code-bar);border-bottom:1px solid var(--code-line)}
+.code-bar .fn{display:flex;align-items:center;gap:8px;font-size:12.5px;color:#9ea5aa;font-weight:350;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.code-bar .fn svg{color:#08afa2;flex:none}
+.code-bar .lang{margin-left:auto;font-size:11px;color:#63696d;font-weight:400}
+.copy{height:27px;padding:0 10px;display:flex;align-items:center;gap:6px;border-radius:5px;color:#9ea5aa;font-size:12px;font-weight:400;border:1px solid transparent;transition:all var(--fast)}
+.copy:hover{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.08);color:#fff}
+.copy.done{color:#0fd4c4}
+.tabs-bar{display:flex;align-items:stretch;height:40px;padding:0 8px 0 4px;background:var(--code-bar);border-bottom:1px solid var(--code-line);overflow-x:auto;scrollbar-width:none}
+.tab{position:relative;padding:0 12px;font-size:12.5px;color:#63696d;font-weight:400;white-space:nowrap;transition:color var(--fast)}
+.tab:hover{color:#c9ced1}
+.tab.on{color:#fff}
+.tab.on::after{content:'';position:absolute;left:10px;right:10px;bottom:-1px;height:2px;background:#08afa2;border-radius:2px}
+.tabs-bar .copy{margin-left:auto;align-self:center}
+.tab-file{padding:9px 14px 0;font-size:12px;color:#63696d;font-weight:300}
+.tab-file svg{color:#08afa2;margin-right:6px}
+pre code{font:inherit;color:inherit;background:none;border:0;padding:0;white-space:pre}
+pre{margin:0;padding:16px 18px 18px;overflow-x:auto;font-family:ui-monospace,'SF Mono','Cascadia Code',Consolas,monospace;font-size:13px;line-height:1.7;color:#c9ced1;tab-size:4;scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.12) transparent}
+.tk-c{color:#5d6468}
+.tk-s{color:#0fd4c4}
+.tk-n{color:#e5a50a}
+.tk-k{color:#f07a7e}
+.tk-f{color:#ffffff}
+.tk-p{color:#9ea5aa}
+
+/* table */
+.tbl{margin:18px 0;--cut:12px}
+.tbl .in{overflow-x:auto;background:var(--panel)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;padding:11px 16px;font-size:12.5px;font-weight:500;color:var(--ink-3);background:var(--inset);border-bottom:1px solid var(--line-soft);white-space:nowrap}
+td{padding:11px 16px;vertical-align:top;color:var(--text);border-bottom:1px solid var(--line-hair);line-height:1.6}
+tr:last-child td{border-bottom:0}
+td:first-child{color:var(--ink);font-weight:450}
+tbody tr:hover td{background:var(--inset)}
+
+/* steps */
+.steps{margin:22px 0;counter-reset:st;list-style:none}
+.step{position:relative;padding:0 0 26px 50px}
+.step::before{
+  counter-increment:st;content:counter(st);position:absolute;left:0;top:0;width:32px;height:32px;display:grid;place-items:center;
+  font-size:13px;font-weight:600;color:var(--teal-ink);background:var(--teal-wash);border:1px solid var(--teal-edge);border-radius:var(--r-sm);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 7px),calc(100% - 7px) 100%,0 100%);
+}
+.step::after{content:'';position:absolute;left:15.5px;top:40px;bottom:6px;width:1px;background:var(--line-soft)}
+.step:last-child{padding-bottom:4px}
+.step:last-child::after{display:none}
+.step h4{font-size:15.5px;font-weight:550;color:var(--head);line-height:1.4;padding-top:4px}
+.step > p,.step .st{margin:5px 0 0;color:var(--text)}
+.step .code{margin:12px 0 0}
+
+/* features */
+.feat{margin:20px 0;--cut:14px}
+.feat .in{display:grid;grid-template-columns:1fr 1fr;background:var(--panel)}
+.fi{display:flex;gap:14px;padding:18px 20px;border-bottom:1px solid var(--line-hair)}
+.fi:nth-child(odd){border-right:1px solid var(--line-hair)}
+.fi:nth-last-child(-n+2):nth-child(odd),.fi:last-child{border-bottom:0}
+.fi .tile-lg{width:34px;height:34px;font-size:14px}
+.fi b{display:block;font-size:14.5px;font-weight:550;color:var(--head);line-height:1.35}
+.fi span{display:block;margin-top:4px;font-size:13.5px;line-height:1.6;color:var(--text);font-weight:300}
+
+/* badges */
+.badges{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0}
+.badges .chip{font-size:12px;padding:3px 10px}
+
+/* image */
+.shot{margin:20px 0;--cut:16px}
+.shot .in{background:var(--inset)}
+.shot img{display:block;width:100%;height:auto}
+.shot .ph{aspect-ratio:16/9;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--ink-3);font-size:13.5px;font-weight:300;
+  background:repeating-linear-gradient(135deg,transparent 0 14px,var(--line-hair) 14px 15px)}
+.shot .ph svg{font-size:22px}
+.shot figcaption{padding:10px 16px;font-size:13px;color:var(--ink-3);font-weight:300;border-top:1px solid var(--line-hair);background:var(--panel)}
+
+/* changelog */
+.cl{margin:22px 0}
+.cl-v{position:relative;padding:0 0 30px 26px;border-left:1px solid var(--line-soft);margin-left:5px}
+.cl-v:last-child{padding-bottom:4px}
+.cl-v::before{content:'';position:absolute;left:-6px;top:6px;width:11px;height:11px;border-radius:2px;background:var(--teal);transform:rotate(45deg);box-shadow:0 0 0 4px var(--bg)}
+.cl-h{display:flex;align-items:baseline;gap:12px}
+.cl-h b{font-size:18px;font-weight:600;color:var(--head);letter-spacing:-.01em}
+.cl-h span{font-size:13px;color:var(--ink-3);font-weight:300}
+.cl-g{margin-top:12px}
+.cl-g h5{display:inline-flex;font-size:11.5px;font-weight:500;padding:1px 8px;border-radius:var(--r-xs);border:1px solid var(--gc2);color:var(--gc);background:var(--gw)}
+.cl-g ul{list-style:none;margin-top:8px}
+.cl-g li{position:relative;padding-left:16px;margin:5px 0;font-size:14.5px;color:var(--text)}
+.cl-g li::before{content:'';position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--gc)}
+.cl-g.added{--gc:var(--teal-ink);--gc2:var(--teal-edge);--gw:var(--teal-wash)}
+.cl-g.changed{--gc:var(--ink-2);--gc2:var(--line);--gw:var(--raise)}
+.cl-g.fixed{--gc:var(--amber);--gc2:var(--amber-edge);--gw:var(--amber-wash)}
+.cl-g.removed{--gc:var(--red);--gc2:var(--red-edge);--gw:var(--red-wash)}
+
+.divider{height:1px;background:var(--line-soft);margin:36px 0}
+
+/* pager + help */
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:56px}
+.pg{--cut:12px;display:block;color:inherit;transition:background var(--fast)}
+.pg:hover{text-decoration:none;background:var(--teal-edge)}
+.pg .in{padding:14px 18px;background:var(--panel)}
+.pg small{display:block;font-size:12.5px;color:var(--ink-3);font-weight:300}
+.pg b{display:block;margin-top:2px;font-size:15px;font-weight:500;color:var(--head)}
+.pg.next{text-align:right;grid-column:2}
+.help{margin-top:18px;--cut:16px}
+.help .in{position:relative;display:flex;align-items:center;gap:16px;padding:18px 20px;overflow:hidden;background:var(--panel)}
+.help .in::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(8,175,162,0) 60%)}
+.help .tx{flex:1}
+.help b{display:block;font-size:15px;font-weight:550;color:var(--head)}
+.help span{display:block;margin-top:2px;font-size:13.5px;color:var(--text);font-weight:300}
+.foot{margin-top:40px;font-size:12.5px;color:var(--ink-3);font-weight:300}
+
+/* soon */
+.soon-box{margin-top:30px;--cut:16px}
+.soon-box .in{padding:36px 32px;text-align:center;background:var(--panel)}
+.soon-box .tile-lg{margin:0 auto 14px;width:46px;height:46px;font-size:19px}
+.soon-box b{display:block;font-size:18px;font-weight:600;color:var(--head)}
+.soon-box p{margin:8px auto 18px;max-width:44ch;font-size:14.5px;color:var(--text);font-weight:300}
+
+/* ═══════════════ TOC ═══════════════ */
+.toc{position:sticky;top:calc(var(--top) + env(safe-area-inset-top,0px));height:calc(100dvh - var(--top) - env(safe-area-inset-top,0px));overflow-y:auto;padding:40px 22px 40px 10px;scrollbar-width:none}
+.toc-t{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--head);margin-bottom:10px}
+.toc-t svg{color:var(--ink-3);font-size:12px}
+.toc ul{list-style:none;border-left:1px solid var(--line-soft)}
+.toc a{display:block;position:relative;padding:4px 0 4px 14px;font-size:13px;line-height:1.45;color:var(--ink-3);font-weight:350}
+.toc a.l3{padding-left:26px;font-size:12.5px}
+.toc a:hover{color:var(--head);text-decoration:none}
+.toc a.on{color:var(--teal-ink)}
+.toc a.on::before{content:'';position:absolute;left:-1px;top:5px;bottom:5px;width:2px;background:var(--teal);border-radius:2px}
+.toc-extra{margin-top:22px;padding-top:16px;border-top:1px solid var(--line-soft);display:flex;flex-direction:column;gap:2px}
+.toc-extra a,.toc-extra button{display:flex;align-items:center;gap:9px;padding:5px 0;font-size:13px;color:var(--ink-3);font-weight:350;text-align:left}
+.toc-extra a:hover,.toc-extra button:hover{color:var(--head);text-decoration:none}
+
+/* ═══════════════ SEARCH ═══════════════ */
+.sk{position:fixed;inset:0;z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:max(10vh,calc(env(safe-area-inset-top,0px) + 16px)) 16px 16px;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.sk[hidden]{display:none}
+.sk-box{width:min(640px,100%);--cut:20px;filter:drop-shadow(0 24px 48px rgba(0,0,0,.5))}
+.sk-box .in{display:flex;flex-direction:column;max-height:min(620px,78vh);background:var(--base);overflow:hidden;position:relative}
+.sk-box .in::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--teal),rgba(8,175,162,0) 60%);z-index:2}
+.sk-bar{display:flex;align-items:center;gap:12px;height:60px;padding:0 12px 0 18px;border-bottom:1px solid var(--line-soft);flex:none}
+.sk-bar svg{color:var(--teal-ink)}
+.sk-bar input{flex:1;min-width:0;height:100%;border:0;outline:0;background:none;font-size:16px;font-weight:350;color:var(--head)}
+.sk-bar input::placeholder{color:var(--ink-3)}
+.pill-close{
+  height:28px;padding:0 16px;border-radius:999px;flex:none;
+  background:linear-gradient(var(--red),var(--red-lo));color:#fff;font-size:12px;font-weight:600;letter-spacing:.015em;
+  box-shadow:0 1px 0 rgba(255,255,255,.28) inset,0 1px 2px rgba(0,0,0,.4);transition:filter var(--fast),transform var(--fast);
+}
+.pill-close:hover{filter:brightness(1.12)}
+.pill-close:active{transform:translateY(1px)}
+.sk-res{flex:1;overflow-y:auto;padding:8px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
+.sk-grp{padding:10px 10px 6px;font-size:12px;font-weight:500;color:var(--ink-3)}
+.sk-it{display:flex;align-items:center;gap:12px;padding:10px;border-radius:var(--r-sm);color:inherit;cursor:pointer}
+.sk-it:hover{text-decoration:none}
+.sk-it.on{background:var(--teal-wash)}
+.sk-it .tile{width:30px;height:30px;flex:none;border-radius:5px;display:grid;place-items:center;font-size:12px;background:var(--raise);border:1px solid var(--line-soft);color:var(--ink-2)}
+.sk-it.on .tile{color:var(--teal-ink);border-color:var(--teal-edge)}
+.sk-it .tx{flex:1;min-width:0}
+.sk-it b{display:block;font-size:14px;font-weight:450;color:var(--head);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sk-it span{display:block;font-size:12.5px;color:var(--ink-3);font-weight:300;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sk-it mark{background:none;color:var(--teal-ink);font-weight:550}
+.sk-it .ret{color:var(--ink-3);font-size:11px;opacity:0}
+.sk-it.on .ret{opacity:1}
+.sk-empty{padding:40px 20px;text-align:center;color:var(--ink-3);font-size:14px;font-weight:300}
+.sk-empty b{display:block;color:var(--head);font-weight:500;margin-bottom:4px}
+.sk-foot{flex:none;display:flex;gap:18px;height:40px;align-items:center;padding:0 16px;border-top:1px solid var(--line-soft);background:var(--inset);font-size:12px;color:var(--ink-3);font-weight:300}
+.sk-foot span{display:flex;align-items:center;gap:6px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));z-index:120;transform:translate(-50%,20px);opacity:0;pointer-events:none;transition:all 200ms cubic-bezier(.2,.8,.2,1);--cut:9px}
+.toast.show{transform:translate(-50%,0);opacity:1}
+.toast .in{display:flex;align-items:center;gap:10px;padding:10px 16px 10px 14px;background:var(--panel);font-size:13.5px;color:var(--head);position:relative}
+.toast .in::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--teal)}
+.toast svg{color:var(--teal-ink)}
+
+/* ═══════════════ RESPONSIVE ═══════════════ */
+@media (max-width:1240px){
+  .shell{grid-template-columns:268px minmax(0,1fr)}
+  .toc{display:none}
+  .main{padding:36px 44px 88px}
+  .hero{margin:-36px -44px 40px;padding:64px 44px 48px}
+}
+@media (max-width:920px){
+  .shell,.shell.wide{grid-template-columns:minmax(0,1fr)}
+  .menu-btn{display:grid;place-items:center}
+  .side{
+    position:fixed;z-index:60;top:0;left:0;bottom:0;width:min(300px,86vw);height:100%;
+    padding-top:calc(22px + env(safe-area-inset-top,0px));padding-bottom:calc(40px + env(safe-area-inset-bottom,0px));
+    background:var(--base);border-right:1px solid var(--line-soft);transform:translateX(-102%);transition:transform 220ms cubic-bezier(.2,.8,.2,1);
+  }
+  body.nav-open .side{transform:none}
+  .scrim{display:block;position:fixed;inset:0;z-index:55;background:rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:opacity 200ms}
+  body.nav-open .scrim{opacity:1;pointer-events:auto}
+  .search-trigger{display:none}
+  .search-icon-btn{display:grid}
+  .tl .t{display:none}
+  .tbl table{min-width:540px}
+  .prose .cell code{white-space:normal;overflow-wrap:anywhere}
+  th,td{padding:10px 12px}
+  .brand .dl{display:none}
+  .main{padding:28px 20px 72px}
+  .hero{margin:-28px -20px 36px;padding:48px 20px 40px}
+  .feat .in{grid-template-columns:1fr}
+  .fi:nth-child(odd){border-right:0}
+  .fi:nth-last-child(-n+2):nth-child(odd){border-bottom:1px solid var(--line-hair)}
+  .fi:last-child{border-bottom:0}
+  .prose h2 .anchor,.prose h3 .anchor{display:none}
+  .top{padding:0 12px;gap:8px}
+}
+@media (max-width:560px){
+  .pager{grid-template-columns:1fr}
+  .pg.next{grid-column:1}
+  .grid{grid-template-columns:1fr}
+  .cat-head{flex-direction:column;gap:2px}
+  .help .in{flex-direction:column;align-items:flex-start}
+  .sk-foot{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <button class="menu-btn" id="menuBtn" type="button" aria-label="Open navigation"><i class="fa-solid fa-bars"></i></button>
+  <a class="brand" href="#/"><span class="mark">N</span><b id="brandName"></b><span class="dl">Docs</span></a>
+  <button class="search-trigger" id="searchTop" type="button"><i class="fa-solid fa-magnifying-glass"></i><span class="lbl">Search the docs</span><span class="kbd" id="kbdHint">Ctrl K</span></button>
+  <nav class="top-links" id="topLinks"></nav>
+</header>
+
+<div class="shell" id="shell">
+  <aside class="side" id="side" aria-label="Documentation navigation"></aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="main" id="main"><div class="doc" id="doc"></div></main>
+  <aside class="toc" id="toc" aria-label="On this page"></aside>
+</div>
+
+<div class="sk" id="sk" hidden>
+  <div class="sk-box fr"><div class="in">
+    <div class="sk-bar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+      <input id="skInput" type="text" placeholder="Search scripts, exports, config and errors" autocomplete="off" spellcheck="false">
+      <button class="pill-close" id="skClose" type="button">Close</button>
+    </div>
+    <div class="sk-res" id="skRes"></div>
+    <div class="sk-foot">
+      <span><span class="kbd">↑</span><span class="kbd">↓</span>Move</span>
+      <span><span class="kbd">Enter</span>Open</span>
+      <span><span class="kbd">Esc</span>Close</span>
+    </div>
+  </div></div>
+</div>
+
+<div class="toast fr" id="toast"><div class="in"><i class="fa-solid fa-check"></i><span id="toastTx"></span></div></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════════
+   SITE SETTINGS
+   ═══════════════════════════════════════════════════════════════════════ */
+const SITE = {
+  brand:   'NAYZEEE',
+  company: 'NAYZEEE Development',
+  discord: 'https://discord.gg/nayzeeedev',
+  website: 'https://www.nayzeeedev.com',
+  store:   'https://www.nayzeeedev.com',
+};
+
+/* Home page sections, in order. Scripts pick one with `category`. */
+const CATEGORIES = [
+  { id: 'core',     name: 'Core and UI',      desc: 'Interface systems every server runs.' },
+  { id: 'economy',  name: 'Jobs and economy', desc: 'Money, vehicles and the people who enforce the law.' },
+  { id: 'activity', name: 'Activities',       desc: 'Things for players to do between scenes.' },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   HOW A SCRIPT ENTRY WORKS
+   ─────────────────────────────────────────────────────────────────────
+   {
+     id: 'nayzeee-example',        // resource folder name, also the URL
+     name: 'Example',              // display name
+     icon: 'fa-bell',              // Font Awesome solid icon
+     category: 'core',             // one of CATEGORIES
+     status: 'live' | 'soon',      // soon = card + "on the way" page
+     version: '1.0.0',
+     frameworks: ['ESX', 'QBCore', 'Qbox'],
+     desc: 'One plain sentence for the card.',
+     store: 'https://...',         // optional Tebex link
+     pages: [ { id, title, icon, emoji, desc, blocks: [...] } ]
+   }
+
+   Blocks (text supports `code`, **bold** and [links](url)):
+     { h2: 'Title', emoji: '✨' }          emoji is only used in the GitBook export
+     { h3: 'Title' }
+     { p: 'Paragraph' }
+     { list: ['Item', 'Item'] }
+     { hint: 'info'|'success'|'warning'|'danger', title: 'Optional', text: '...' }
+     { code: c`...`, lang: 'lua'|'cfg'|'sql'|'js'|'json'|'bash', file: 'config.lua' }
+     { tabs: [ { label: 'ESX', code: c`...`, lang: 'lua', file: '...' } ] }
+     { table: { head: ['Setting', 'Default', 'Description'], rows: [[...], [...]] } }
+     { steps: [ { title: 'Step', text: '...', code: c`...`, lang: 'cfg' } ] }
+     { features: [ { icon: 'fa-bolt', title: '...', text: '...' } ] }
+     { badges: ['ESX', 'QBCore'] }
+     { image: { src: 'https://...', caption: '...' } }   no src = placeholder
+     { changelog: [ { version: '1.0.0', date: '', added: [], changed: [], fixed: [], removed: [] } ] }
+     { divider: true }
+   ═══════════════════════════════════════════════════════════════════════ */
+const c = (s, ...v) => String.raw({ raw: s.raw }, ...v).replace(/^\n/, '').replace(/\s+$/, '');
+
+const GUIDE = {
+  id: 'getting-started', name: 'Getting started', icon: 'fa-rocket', guide: true,
+  pages: [
+    {
+      id: 'installing', title: 'Installing a script', icon: 'fa-download', emoji: '📥',
+      desc: 'Every NAYZEEE resource installs the same way. Do this once and the rest is the same.',
+      blocks: [
+        { h2: 'Download your purchase', emoji: '🛒' },
+        { steps: [
+          { title: 'Buy from the store', text: 'Purchases are granted to the Cfx.re account you log in with at checkout.' },
+          { title: 'Open the Cfx.re Portal', text: 'Go to [portal.cfx.re](https://portal.cfx.re), open **Assets** and find the script under **Granted Assets**.' },
+          { title: 'Download and extract', text: 'Extract the zip straight into your `resources` folder. You should end up with `resources/nayzeee-example/fxmanifest.lua`, not a folder inside a folder.' },
+          { title: 'Start it in server.cfg', text: 'Add it after your framework and its dependencies.', code: c`
+ensure oxmysql
+ensure ox_lib
+ensure es_extended
+
+ensure nayzeee-example`, lang: 'cfg', file: 'server.cfg' },
+          { title: 'Restart the server', text: 'A full restart registers the new resource. Each script\'s installation page lists anything extra it needs, like SQL or items.' },
+        ] },
+        { hint: 'warning', title: 'Keep the folder name', text: 'Don\'t rename the resource folder. Other resources call its exports by that exact name.' },
+        { h2: 'Server requirements', emoji: '🧰' },
+        { table: { head: ['Requirement', 'Details'], rows: [
+          ['Server artifacts', 'A recent recommended build. Old builds can\'t load escrowed files.'],
+          ['Framework', 'ESX Legacy, QBCore or Qbox depending on the script. The overview page of each script lists what it supports.'],
+          ['Database', '`oxmysql`, for scripts that save data.'],
+          ['Library', '`ox_lib`, when listed under the script\'s dependencies.'],
+        ] } },
+      ],
+    },
+    {
+      id: 'escrow', title: 'Escrow and entitlement', icon: 'fa-lock', emoji: '🔐',
+      desc: 'Scripts ship through Cfx.re asset escrow. Core files are encrypted, config files stay open for you to edit.',
+      blocks: [
+        { h2: 'What you can edit', emoji: '✏️' },
+        { p: 'Anything listed as open on a script\'s configuration page, usually `config.lua`, locales and bridge files. Encrypted files show unreadable text when opened. Leave them as they are.' },
+        { h2: 'Common errors', emoji: '🧯' },
+        { table: { head: ['Issue', 'Solution'], rows: [
+          ['You lack the required entitlement', 'Your server key belongs to a different Cfx.re account than the one that bought the script. Generate the key on the purchasing account, or transfer the asset to the account that owns the key.'],
+          ['Failed to verify protected resource', 'A file changed during upload. Download again and upload over FTP in binary mode. Never open and re-save encrypted files.'],
+          ['Resource not found', 'The folder was renamed, or it is nested one level too deep (`resources/name/name`).'],
+          ['Script broke after an update', 'Delete the old folder completely before copying in the new version, then restore your config.'],
+        ] } },
+        { hint: 'info', text: 'Back up your `config.lua` before every update. It\'s the only file you normally need to carry over.' },
+      ],
+    },
+    {
+      id: 'support', title: 'Getting support', icon: 'fa-life-ring', emoji: '💬',
+      desc: 'Open a ticket in Discord. Include these and it gets solved on the first reply.',
+      blocks: [
+        { h2: 'Before you open a ticket', emoji: '📋' },
+        { list: [
+          'Check the troubleshooting page of the script.',
+          'Make sure you\'re on the latest version from the Cfx.re Portal.',
+          'Restart the server fully, not just the resource.',
+        ] },
+        { h2: 'What to include', emoji: '📎' },
+        { table: { head: ['Detail', 'Where to find it'], rows: [
+          ['Script and version', 'The `version` line in `fxmanifest.lua`'],
+          ['Framework', 'ESX Legacy, QBCore or Qbox, with its version'],
+          ['Server console errors', 'Screenshot the red text in your server console'],
+          ['Client errors', 'Press **F8** in game and screenshot anything red'],
+          ['What you expected', 'One sentence on what should happen and what happens instead'],
+        ] } },
+        { p: 'Tickets are opened in our [Discord](https://discord.gg/nayzeeedev).' },
+      ],
+    },
+  ],
+};
+
+const SCRIPTS = [
+  /* ─────────────────────────────── NOTIFY ─────────────────────────────── */
+  {
+    id: 'nayzeee-notify', name: 'Notify', icon: 'fa-bell', category: 'core', status: 'live', version: '1.0.0',
+    frameworks: ['Standalone', 'ESX', 'QBCore', 'ox_lib'],
+    desc: 'Notifications, announcements, interaction prompts and yes or no questions in one lightweight resource.',
+    pages: [
+      {
+        id: 'overview', title: 'Overview', icon: 'fa-circle-info', emoji: '🔔',
+        desc: 'Notifications, announcements, interaction prompts and yes or no questions in one lightweight resource. Standalone, with drop-in bridges for ESX Legacy, QBCore and ox_lib.',
+        blocks: [
+          { badges: ['Standalone', 'ESX Legacy', 'QBCore', 'ox_lib', '0.00 ms idle'] },
+          { image: { src: '', caption: 'Notifications, an announcement, a text prompt and a question on screen together.' } },
+          { h2: 'Features', emoji: '✨' },
+          { features: [
+            { icon: 'fa-bell', title: 'Notifications', text: 'Eight screen positions, colour and icon per type, a timer bar, GTA colour codes, duplicates merged with a counter.' },
+            { icon: 'fa-bullhorn', title: 'Announcements', text: 'Top of screen banner for staff messages with sender, queueing and an /announce command.' },
+            { icon: 'fa-keyboard', title: 'Text UI', text: 'Keycap prompts with one or several keys. Safe to call every frame.' },
+            { icon: 'fa-circle-question', title: 'Questions', text: 'Yes or no prompts with rebindable keys and a countdown, from client or server.' },
+            { icon: 'fa-inbox', title: 'Notification center', text: 'Session history plus per-player sound and position settings.' },
+            { icon: 'fa-gauge-high', title: 'Performance', text: 'No per-frame loops, idles at 0.00 ms. Timers pause with the pause menu.' },
+          ] },
+          { h2: 'Dependencies', emoji: '📦' },
+          { table: { head: ['Resource', 'Required', 'Notes'], rows: [
+            ['None', 'No', 'Runs standalone'],
+            ['es_extended', 'Optional', 'Lets ESX groups use `/announce` and powers the ESX bridge'],
+          ] } },
+        ],
+      },
+      {
+        id: 'installation', title: 'Installation', icon: 'fa-download', emoji: '🛠️',
+        desc: 'Takes about two minutes. No SQL, no items.',
+        blocks: [
+          { steps: [
+            { title: 'Add the resource', text: 'Drop `nayzeee-notify` into your `resources` folder.' },
+            { title: 'Start it early', text: 'Ensure it before any resource that sends notifications.', code: c`ensure nayzeee-notify`, lang: 'cfg', file: 'server.cfg' },
+            { title: 'Give staff access to /announce', code: c`add_ace group.admin nayzeee.announce allow`, lang: 'cfg', file: 'server.cfg' },
+            { title: 'Connect your framework', text: 'Optional. Point your framework at Notify with the [framework bridges](#/nayzeee-notify/bridges).' },
+            { title: 'Restart and test', text: 'Set `Config.Debug = true` and run `/notifytest` to see every feature at once.' },
+          ] },
+        ],
+      },
+      {
+        id: 'bridges', title: 'Framework bridges', icon: 'fa-link', emoji: '🔗',
+        desc: 'Replace your framework\'s notify function once and every resource that uses it switches over.',
+        blocks: [
+          { hint: 'warning', text: 'Replace the existing function in your framework file, then restart the framework.' },
+          { tabs: [
+            { label: 'ESX Legacy', file: 'es_extended/client/functions.lua', lang: 'lua', code: c`
+function ESX.ShowNotification(message, notifyType, length, title, position)
+    return exports['nayzeee-notify']:Notify({
+        message = message, type = notifyType, duration = length, title = title, position = position
+    })
+end
+
+function ESX.TextUI(message, notifyType)
+    return exports['nayzeee-notify']:ShowTextUI(message, notifyType)
+end
+
+function ESX.HideUI()
+    return exports['nayzeee-notify']:HideTextUI()
+end` },
+            { label: 'QBCore', file: 'qb-core/client/functions.lua', lang: 'lua', code: c`
+function QBCore.Functions.Notify(text, texttype, length, icon)
+    if type(text) == 'table' then
+        return exports['nayzeee-notify']:Notify({ title = text.caption, message = text.text, type = texttype, duration = length, icon = icon })
+    end
+    return exports['nayzeee-notify']:Notify({ message = text, type = texttype, duration = length, icon = icon })
+end` },
+            { label: 'ox_lib', file: 'ox_lib/resource/interface/client/notify.lua', lang: 'lua', code: c`
+function lib.notify(data)
+    return exports['nayzeee-notify']:Notify(data)
+end` },
+          ] },
+          { hint: 'info', text: '`description`, `length`, `inform`, `primary` and other framework field names are understood automatically. Map any extra type names in `Config.TypeAliases`.' },
+        ],
+      },
+      {
+        id: 'api', title: 'Exports and events', icon: 'fa-code', emoji: '🧩',
+        desc: 'Everything other resources can call, client and server.',
+        blocks: [
+          { h2: 'Notifications', emoji: '💬' },
+          { tabs: [
+            { label: 'Client', lang: 'lua', code: c`
+exports['nayzeee-notify']:Notify({
+    title    = 'Vehicle stored',
+    message  = 'Your ~g~Sultan RS~s~ is parked at Pillbox garage.',
+    type     = 'success',
+    duration = 5000,
+})
+
+-- Shorthand: message, type, duration, title
+exports['nayzeee-notify']:Notify('You need a lockpick.', 'error')` },
+            { label: 'Server', lang: 'lua', code: c`
+exports['nayzeee-notify']:Notify(source, { type = 'money', title = 'Paycheck', message = 'You were paid $1,250.' })
+exports['nayzeee-notify']:Notify(-1, 'Everyone sees this.', 'info')
+
+-- Event form
+TriggerClientEvent('nayzeee-notify:notify', source, { type = 'success', message = 'Saved.' })` },
+          ] },
+          { h3: 'Options' },
+          { table: { head: ['Setting', 'Default', 'Description'], rows: [
+            ['`message`', '-', 'Body text, supports GTA colour codes'],
+            ['`title`', 'none', 'Bold first line. Leave out for a single-line notification'],
+            ['`type`', '`info`', 'Any key from `Config.Types` or `Config.TypeAliases`'],
+            ['`duration`', '`Config.Notify.Duration`', 'Time on screen in ms'],
+            ['`position`', 'player setting', 'Force a position for this notification'],
+            ['`icon`', 'from type', 'Built-in icon name or a Font Awesome class like `fa-solid fa-car`'],
+            ['`sound`', 'from type', 'Built-in sound name, or `false` for silent'],
+            ['`id`', 'none', 'Sending again with the same id updates it in place'],
+          ] } },
+          { h3: 'Updating and removing' },
+          { code: c`
+exports['nayzeee-notify']:Notify({ id = 'fuel', type = 'warning', message = 'Fuel at 20%' })
+exports['nayzeee-notify']:Notify({ id = 'fuel', type = 'error',   message = 'Fuel at 5%' })   -- same card, updated
+exports['nayzeee-notify']:RemoveNotify('fuel')
+exports['nayzeee-notify']:ClearNotifications()`, lang: 'lua' },
+          { h3: 'Colour codes' },
+          { table: { head: ['Code', 'Result'], rows: [
+            ['`~r~` `~g~` `~b~` `~y~` `~o~` `~p~` `~c~`', 'Red, teal, blue, amber, orange, purple, grey'],
+            ['`~h~`', 'Bold on and off'],
+            ['`~s~` `~w~`', 'Reset'],
+            ['`~n~`', 'New line'],
+          ] } },
+
+          { h2: 'Announcements', emoji: '📢' },
+          { tabs: [
+            { label: 'Client', lang: 'lua', code: c`
+exports['nayzeee-notify']:TopNotify({ title = 'Server restart', message = 'Restarting in 10 minutes.', type = 'warning' })` },
+            { label: 'Server', lang: 'lua', code: c`
+-- -1 sends to everyone
+exports['nayzeee-notify']:TopNotify(-1, { title = 'Car meet', message = 'Pier, 9pm.', sender = 'Staff' })` },
+          ] },
+          { p: 'In game, staff can type `/announce The city restarts in 10 minutes.`' },
+          { table: { head: ['Setting', 'Default', 'Description'], rows: [
+            ['`title`', '`Announcement`', 'Heading'],
+            ['`message`', '-', 'Body text'],
+            ['`sender`', 'none', 'Shown under the message'],
+            ['`type`', '`announce`', 'Colour, icon and sound'],
+            ['`duration`', '`Config.Announce.Duration`', 'Time on screen in ms'],
+          ] } },
+
+          { h2: 'Text UI', emoji: '⌨️' },
+          { code: c`
+exports['nayzeee-notify']:ShowTextUI('Open garage', { key = 'E' })
+exports['nayzeee-notify']:ShowTextUI('[E] Open garage')             -- same result
+exports['nayzeee-notify']:ShowTextUI({ keys = {
+    { key = 'E', label = 'Open garage' },
+    { key = 'G', label = 'Lock vehicle' },
+}})
+exports['nayzeee-notify']:ShowTextUI({ text = 'Restricted area', type = 'error', icon = 'lock' })
+
+exports['nayzeee-notify']:HideTextUI()
+local open, text = exports['nayzeee-notify']:IsTextUIOpen()`, lang: 'lua' },
+          { hint: 'success', text: 'Calling `ShowTextUI` every frame inside a zone is fine. Identical calls are ignored, so the UI only updates when the content changes.' },
+          { p: 'From the server: `exports[\'nayzeee-notify\']:ShowTextUI(source, \'Open garage\', { key = \'E\' })` and `HideTextUI(source)`.' },
+
+          { h2: 'Questions', emoji: '❓' },
+          { p: 'Returns `true` when accepted, `false` when declined and `nil` when time runs out. It waits for the answer, so call it from a thread.' },
+          { tabs: [
+            { label: 'Client', lang: 'lua', code: c`
+local accepted = exports['nayzeee-notify']:Question({
+    title   = 'Join the crew?',
+    message = 'Tlay invited you to the heist crew.',
+    accept  = 'Join',
+    decline = 'Decline',
+    timeout = 15000,
+})` },
+            { label: 'Server', lang: 'lua', code: c`
+local accepted = exports['nayzeee-notify']:Question(targetId, { title = 'Accept trade?', message = '2x Lockpick for $500' })` },
+          ] },
+          { p: 'Players rebind the accept and decline keys in **Settings > Key Bindings > FiveM**. The prompt always shows the key they actually use.' },
+
+          { h2: 'Notification center', emoji: '🗂️' },
+          { p: '`/notifications` opens the session history. Players turn sounds on or off and pick where notifications appear on a miniature of their screen. Both choices save on their PC.' },
+          { table: { head: ['Export', 'Description'], rows: [
+            ['`OpenCenter()`', 'Open it from another resource'],
+            ['`CloseCenter()`', 'Close it'],
+            ['`SetHidden(state)`', 'Hide everything, for cutscenes or photo modes'],
+          ] } },
+        ],
+      },
+      {
+        id: 'configuration', title: 'Configuration', icon: 'fa-sliders', emoji: '⚙️',
+        desc: 'Every setting lives in config.lua, which stays open under escrow.',
+        blocks: [
+          { h2: 'Settings', emoji: '🔧' },
+          { table: { head: ['Setting', 'Default', 'Description'], rows: [
+            ['`Config.Scale`', '`1.0`', 'Size multiplier on top of automatic resolution scaling'],
+            ['`Config.HideInPauseMenu`', '`true`', 'Hide and pause everything in the pause menu'],
+            ['`Config.Notify.Position`', '`top-right`', 'Default notification position'],
+            ['`Config.Notify.MaxVisible`', '`5`', 'Per position'],
+            ['`Config.Notify.MergeDuplicates`', '`true`', 'Stack identical notifications with a counter'],
+            ['`Config.Notify.AllowPlayerPosition`', '`true`', 'Let players move their notifications'],
+            ['`Config.Announce.Queue`', '`true`', 'Queue announcements instead of replacing'],
+            ['`Config.Announce.Groups`', '`admin, superadmin`', 'ESX groups that can use `/announce`'],
+            ['`Config.Question.AcceptKey`', '`Y`', 'Default accept key'],
+            ['`Config.Question.DeclineKey`', '`N`', 'Default decline key'],
+            ['`Config.Center.HistoryLimit`', '`50`', 'Notifications kept per session'],
+            ['`Config.Sound.Volume`', '`0.35`', 'Master volume'],
+          ] } },
+          { h2: 'Adding a type', emoji: '🎨' },
+          { code: c`Config.Types.garage = { color = '#08afa2', icon = 'fa-solid fa-warehouse', sound = 'soft' }`, lang: 'lua', file: 'config.lua' },
+          { p: 'Built-in icons: `check` `error` `warning` `info` `bell` `money` `car` `shield` `megaphone` `help` `phone` `clock` `lock` `user` `key` `pin` `x`' },
+          { p: 'Built-in sounds: `chime` `soft` `alert` `announce` `question`' },
+          { h2: 'Commands and keybinds', emoji: '🎮' },
+          { table: { head: ['Command', 'Who', 'Description'], rows: [
+            ['`/announce [message]`', 'Staff', 'Announcement to everyone. Needs `nayzeee.announce` or an ESX group from the config'],
+            ['`/notifications`', 'Everyone', 'Opens the notification center'],
+            ['`/notifytest`', 'Everyone', 'Shows every feature. Only registered when `Config.Debug` is on'],
+            ['`Y` / `N`', 'Everyone', 'Accept or decline a question. Rebindable'],
+          ] } },
+        ],
+      },
+      {
+        id: 'troubleshooting', title: 'Troubleshooting', icon: 'fa-screwdriver-wrench', emoji: '🧯',
+        desc: 'The fixes for everything that comes up in tickets.',
+        blocks: [
+          { table: { head: ['Issue', 'Solution'], rows: [
+            ['Framework notifications still use the old style', 'The bridge wasn\'t saved or the framework wasn\'t restarted. Restart the framework after editing it.'],
+            ['`/announce` says no permission', 'Add `add_ace group.admin nayzeee.announce allow`, or add the ESX group to `Config.Announce.Groups`.'],
+            ['Question keys don\'t respond', 'Another resource uses the same key. Rebind under Settings > Key Bindings > FiveM.'],
+            ['Notifications are too small or too large', 'Adjust `Config.Scale`.'],
+            ['No sound', 'Check `Config.Sound.Enabled`, and that the player hasn\'t muted sounds in `/notifications`.'],
+          ] } },
+          { hint: 'info', text: 'Still stuck? Set `Config.Debug = true`, run `/notifytest`, and send a screenshot of F8 with your ticket.' },
+        ],
+      },
+      {
+        id: 'changelog', title: 'Changelog', icon: 'fa-clock-rotate-left', emoji: '📝',
+        desc: 'What changed in each version.',
+        blocks: [
+          { changelog: [
+            { version: '1.0.0', date: '', added: [
+              'Notifications with eight positions, merging, colour codes and update by id',
+              'Announcements with queueing and the `/announce` command',
+              'Text UI with single and multi-key prompts',
+              'Yes or no questions from client and server',
+              'Notification center with per-player sound and position',
+              'Bridges for ESX Legacy, QBCore and ox_lib',
+            ] },
+          ] },
+        ],
+      },
+    ],
+  },
+
+  /* ─────────────────────────── COMING SOON ─────────────────────────── */
+  { id: 'nayzeee-hud',     name: 'HUD',           icon: 'fa-gauge-high',          category: 'core',     status: 'soon', frameworks: ['ESX'], desc: 'Status, vehicle and minimap HUD with its own sound set.' },
+  { id: 'nayzeee-banking', name: 'Banking',       icon: 'fa-building-columns',    category: 'economy',  status: 'soon', frameworks: ['ESX'], desc: 'Accounts, cards and ATMs with a banking interface built to feel real.' },
+  { id: 'nayzeee-garages', name: 'Garages',       icon: 'fa-warehouse',           category: 'economy',  status: 'soon', frameworks: ['ESX', 'QBCore', 'Qbox'], desc: 'Garages, impounds, private garages, showrooms, fake plates and co-owners.' },
+  { id: 'nayzeee-mdt',     name: 'MDT and Dispatch', icon: 'fa-tablet-screen-button', category: 'economy', status: 'soon', frameworks: ['ESX'], desc: 'Dispatch board, live map, registries and an evidence chain of custody.' },
+  { id: 'nayzeee-racing',  name: 'Racing',        icon: 'fa-flag-checkered',      category: 'activity', status: 'soon', frameworks: ['ESX'], desc: 'Street racing tablet for building tracks and running races.' },
+  { id: 'nayzeee-speaker', name: 'Speaker',       icon: 'fa-music',               category: 'activity', status: 'soon', frameworks: ['ESX'], desc: 'Synced 3D music, placeable boomboxes and CarPlay with YouTube playback.' },
+];
+
+/* ═══════════════════════════════════════════════════════════════════════
+   ENGINE (no edits needed below this line)
+   ═══════════════════════════════════════════════════════════════════════ */
+(() => {
+'use strict';
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch]));
+const slug = s => String(s).toLowerCase().replace(/`|\*\*/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const fa = n => `<i class="fa-solid ${esc(n || 'fa-file-lines')}"></i>`;
+const fr = (cls, inner, extra = '') => `<div class="${cls} fr"${extra}><div class="in">${inner}</div></div>`;
+const ALL = [GUIDE, ...SCRIPTS];
+const byId = id => ALL.find(s => s.id === id);
+const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function inline(s) {
+  const parts = String(s ?? '').split(/(`[^`]+`)/g);
+  return parts.map(p => {
+    if (/^`[^`]+`$/.test(p)) return `<code>${esc(p.slice(1, -1))}</code>`;
+    return esc(p)
+      .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+      .replace(/\[([^\]]+)\]\(([^)\s]+)\)/g, (m, t, u) => {
+        const ext = /^https?:/i.test(u);
+        return `<a href="${u}"${ext ? ' target="_blank" rel="noopener"' : ''}>${t}</a>`;
+      });
+  }).join('');
+}
+
+/* ─────────────── syntax highlighting ─────────────── */
+const LANGS = {
+  lua: { re: /(--\[\[[\s\S]*?\]\]|--[^\n]*)|("(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|\[\[[\s\S]*?\]\])|\b(0x[\da-f]+|\d+(?:\.\d+)?)\b|\b(local|function|end|if|then|else|elseif|return|for|in|do|while|repeat|until|and|or|not|nil|true|false|break)\b|([A-Za-z_]\w*)(?=\s*[({])/gi, cls: ['c', 's', 'n', 'k', 'f'] },
+  cfg: { re: /(#[^\n]*)|("(?:\\.|[^"\\\n])*")|\b(\d+(?:\.\d+)?)\b|^(\s*(?:ensure|start|stop|restart|add_ace|add_principal|remove_ace|set|setr|sets|exec|endpoint_add_tcp|endpoint_add_udp|sv_maxclients|sv_hostname|sv_licenseKey|load_server_icon))\b|\b(allow|deny)\b/gim, cls: ['c', 's', 'n', 'k', 'f'] },
+  sql: { re: /(--[^\n]*|\/\*[\s\S]*?\*\/)|('(?:''|[^'])*'|`[^`]*`)|\b(\d+(?:\.\d+)?)\b|\b(SELECT|INSERT|INTO|VALUES|UPDATE|SET|DELETE|FROM|WHERE|CREATE|TABLE|IF|NOT|EXISTS|PRIMARY|KEY|DEFAULT|NULL|AUTO_INCREMENT|ALTER|ADD|COLUMN|DROP|INDEX|UNIQUE|ENGINE|CHARSET|COLLATE|AND|OR|ON|JOIN|LEFT|INT|INTEGER|VARCHAR|TEXT|LONGTEXT|TINYINT|BIGINT|BOOLEAN|DATETIME|TIMESTAMP|CURRENT_TIMESTAMP|FLOAT|DOUBLE|JSON)\b|([A-Za-z_]\w*)(?=\s*\()/gi, cls: ['c', 's', 'n', 'k', 'f'] },
+  js: { re: /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:\\.|[^"\\\n])*"|'(?:\\.|[^'\\\n])*'|`(?:\\.|[^`\\])*`)|\b(\d+(?:\.\d+)?)\b|\b(const|let|var|function|return|if|else|for|while|of|in|new|class|import|export|from|default|async|await|true|false|null|undefined|this)\b|([A-Za-z_$][\w$]*)(?=\s*\()/g, cls: ['c', 's', 'n', 'k', 'f'] },
+  json: { re: /("(?:\\.|[^"\\])*")(?=\s*:)|("(?:\\.|[^"\\])*")|\b(-?\d+(?:\.\d+)?)\b|\b(true|false|null)\b/g, cls: ['f', 's', 'n', 'k'] },
+  bash: { re: /(#[^\n]*)|("(?:\\.|[^"\\])*"|'[^']*')|\b(\d+)\b|\b(cd|ls|mkdir|cp|mv|rm|git|npm|echo|sudo|unzip)\b/g, cls: ['c', 's', 'n', 'k'] },
+};
+LANGS.html = LANGS.js; LANGS.javascript = LANGS.js; LANGS.xml = LANGS.js;
+function highlight(code, lang) {
+  const L = LANGS[lang];
+  if (!L) return esc(code);
+  L.re.lastIndex = 0;
+  let out = '', last = 0, m;
+  while ((m = L.re.exec(code))) {
+    if (m[0] === '') { L.re.lastIndex++; continue; }
+    const g = m.slice(1).findIndex(x => x !== undefined);
+    out += esc(code.slice(last, m.index)) + `<span class="tk-${L.cls[g]}">${esc(m[0])}</span>`;
+    last = L.re.lastIndex;
+  }
+  return out + esc(code.slice(last));
+}
+const LANG_NAME = { lua: 'Lua', cfg: 'cfg', sql: 'SQL', js: 'JavaScript', json: 'JSON', bash: 'Shell', html: 'HTML' };
+
+/* ─────────────── blocks ─────────────── */
+let codeStore = [];
+function codeBlock(b) {
+  const i = codeStore.push(b.code) - 1;
+  return fr('code', `
+    <div class="code-bar">
+      <span class="fn">${b.file ? `${fa('fa-file-code')}${esc(b.file)}` : ''}</span>
+      <span class="lang">${esc(LANG_NAME[b.lang] || b.lang || '')}</span>
+      <button class="copy" type="button" data-copy="${i}">${fa('fa-copy')}<span>Copy</span></button>
+    </div>
+    <pre><code>${highlight(b.code, b.lang)}</code></pre>`);
+}
+function tabsBlock(b) {
+  const ids = b.tabs.map(t => codeStore.push(t.code) - 1);
+  const head = b.tabs.map((t, i) => `<button class="tab${i ? '' : ' on'}" type="button" data-tab="${i}">${esc(t.label)}</button>`).join('');
+  const panes = b.tabs.map((t, i) => `<div class="pane" data-pane="${i}"${i ? ' hidden' : ''}>${t.file ? `<div class="tab-file">${fa('fa-file-code')}${esc(t.file)}</div>` : ''}<pre><code>${highlight(t.code, t.lang)}</code></pre></div>`).join('');
+  return fr('code tabs', `<div class="tabs-bar">${head}<button class="copy" type="button" data-copy="${ids[0]}" data-copies="${ids.join(',')}">${fa('fa-copy')}<span>Copy</span></button></div>${panes}`);
+}
+function heading(level, text) {
+  const id = slug(text);
+  const tag = `h${level}`;
+  return `<${tag} id="${id}" data-toc="${level}"><a class="anchor" href="${routeHref(cur.s, cur.p, id)}" aria-label="Link to this section">#</a>${inline(text)}</${tag}>`;
+}
+function block(b) {
+  if (b.h2) return heading(2, b.h2);
+  if (b.h3) return heading(3, b.h3);
+  if (b.p) return `<p>${inline(b.p)}</p>`;
+  if (b.list) return `<ul class="list">${b.list.map(x => `<li>${inline(x)}</li>`).join('')}</ul>`;
+  if (b.hint) {
+    const ic = { info: 'fa-circle-info', success: 'fa-circle-check', warning: 'fa-triangle-exclamation', danger: 'fa-circle-exclamation' }[b.hint] || 'fa-circle-info';
+    return fr(`hint ${esc(b.hint)}`, `<div class="hi">${fa(ic)}</div><div class="ht">${b.title ? `<b>${inline(b.title)}</b>` : ''}${inline(b.text)}</div>`);
+  }
+  if (b.code != null) return codeBlock(b);
+  if (b.tabs) return tabsBlock(b);
+  if (b.table) {
+    const t = b.table;
+    return fr('tbl', `<table><thead><tr>${t.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${t.rows.map(r => `<tr>${r.map(x => `<td class="cell">${inline(x)}</td>`).join('')}</tr>`).join('')}</tbody></table>`);
+  }
+  if (b.steps) return `<ol class="steps">${b.steps.map(s => `<li class="step"><h4>${inline(s.title)}</h4>${s.text ? `<p>${inline(s.text)}</p>` : ''}${s.code ? codeBlock(s) : ''}</li>`).join('')}</ol>`;
+  if (b.features) return fr('feat', b.features.map(f => `<div class="fi"><div class="tile-lg">${fa(f.icon)}</div><div><b>${inline(f.title)}</b><span>${inline(f.text)}</span></div></div>`).join(''));
+  if (b.badges) return `<div class="badges">${b.badges.map(x => `<span class="chip">${esc(x)}</span>`).join('')}</div>`;
+  if (b.image) {
+    const im = b.image;
+    const body = im.src ? `<img src="${esc(im.src)}" alt="${esc(im.caption || '')}" loading="lazy">` : `<div class="ph">${fa('fa-image')}<span>Screenshot goes here</span></div>`;
+    return `<figure class="shot fr"><div class="in">${body}${im.caption ? `<figcaption>${inline(im.caption)}</figcaption>` : ''}</div></figure>`;
+  }
+  if (b.changelog) {
+    const grp = (k, label, v) => v && v.length ? `<div class="cl-g ${k}"><h5>${label}</h5><ul>${v.map(x => `<li>${inline(x)}</li>`).join('')}</ul></div>` : '';
+    return `<div class="cl">${b.changelog.map(v => `<div class="cl-v" id="v${slug(v.version)}"><div class="cl-h"><b>${esc(v.version)}</b>${v.date ? `<span>${esc(v.date)}</span>` : ''}</div>${grp('added', 'Added', v.added)}${grp('changed', 'Changed', v.changed)}${grp('fixed', 'Fixed', v.fixed)}${grp('removed', 'Removed', v.removed)}</div>`).join('')}</div>`;
+  }
+  if (b.divider) return '<div class="divider"></div>';
+  return '';
+}
+
+/* ─────────────── GitBook markdown export ─────────────── */
+function toMarkdown(s, p) {
+  const o = [`# ${p.emoji ? p.emoji + ' ' : ''}${p.title}`, ''];
+  if (p.desc) o.push(p.desc, '');
+  const fence = (code, lang) => ['```' + (lang || ''), code, '```'];
+  for (const b of p.blocks || []) {
+    if (b.h2) o.push(`## ${b.emoji ? b.emoji + ' ' : ''}${b.h2}`, '');
+    else if (b.h3) o.push(`### ${b.h3}`, '');
+    else if (b.p) o.push(b.p, '');
+    else if (b.list) o.push(...b.list.map(x => `- ${x}`), '');
+    else if (b.hint) o.push(`{% hint style="${b.hint}" %}`, (b.title ? `**${b.title}**\n\n` : '') + b.text, '{% endhint %}', '');
+    else if (b.code != null) { if (b.file) o.push(`\`${b.file}\``, ''); o.push(...fence(b.code, b.lang), ''); }
+    else if (b.tabs) {
+      o.push('{% tabs %}');
+      b.tabs.forEach(t => { o.push(`{% tab title="${t.label}" %}`); if (t.file) o.push(`\`${t.file}\``, ''); o.push(...fence(t.code, t.lang), '{% endtab %}', ''); });
+      o.push('{% endtabs %}', '');
+    }
+    else if (b.table) {
+      const row = r => `| ${r.map(x => String(x).replace(/\|/g, '\\|')).join(' | ')} |`;
+      o.push(row(b.table.head), row(b.table.head.map(() => '---')), ...b.table.rows.map(row), '');
+    }
+    else if (b.steps) b.steps.forEach((st, i) => {
+      o.push(`${i + 1}. **${st.title}**${st.text ? ' ' + st.text : ''}`);
+      if (st.code) o.push(...fence(st.code, st.lang).map(l => '   ' + l));
+      if (i === b.steps.length - 1) o.push('');
+    });
+    else if (b.features) o.push('| Feature | Description |', '| --- | --- |', ...b.features.map(f => `| ${f.title} | ${f.text} |`), '');
+    else if (b.badges) o.push(b.badges.map(x => `\`${x}\``).join(' '), '');
+    else if (b.image && b.image.src) o.push(`![${b.image.caption || ''}](${b.image.src})`, '');
+    else if (b.changelog) b.changelog.forEach(v => {
+      o.push(`## ${v.version}${v.date ? ' - ' + v.date : ''}`, '');
+      [['added', 'Added'], ['changed', 'Changed'], ['fixed', 'Fixed'], ['removed', 'Removed']].forEach(([k, l]) => {
+        if (v[k] && v[k].length) o.push(`**${l}**`, ...v[k].map(x => `- ${x}`), '');
+      });
+    });
+    else if (b.divider) o.push('---', '');
+  }
+  return o.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
+}
+
+/* ─────────────── clipboard + toast ─────────────── */
+async function copyText(t) {
+  try { await navigator.clipboard.writeText(t); return true; } catch (e) {
+    const ta = document.createElement('textarea');
+    ta.value = t; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    let ok = false; try { ok = document.execCommand('copy'); } catch (e2) {}
+    ta.remove(); return ok;
+  }
+}
+let toastT;
+function toast(msg) {
+  $('#toastTx').textContent = msg;
+  const el = $('#toast'); el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 1800);
+}
+
+/* ─────────────── routing ─────────────── */
+let cur = { s: null, p: null, a: null };
+const routeHref = (s, p, a) => '#/' + [s, p, a].filter(Boolean).join('/');
+function parse() {
+  const [s, p, a] = location.hash.replace(/^#\/?/, '').split('/').map(decodeURIComponent);
+  return { s: s || null, p: p || null, a: a || null };
+}
+function route() {
+  const r = parse();
+  const script = r.s && byId(r.s);
+  const samePage = script && cur.s === r.s && (cur.p === (r.p || firstPage(script))) && $('#doc').dataset.rendered === '1';
+  if (samePage) { cur.a = r.a; scrollToAnchor(r.a, true); closeNav(); return; }
+  if (!script) { cur = { s: null, p: null, a: null }; renderHome(); }
+  else if (script.status === 'soon') { cur = { s: script.id, p: null, a: null }; renderSoon(script); }
+  else {
+    const page = (script.pages || []).find(p => p.id === r.p) || script.pages[0];
+    cur = { s: script.id, p: page.id, a: r.a };
+    renderPage(script, page);
+  }
+  renderSide();
+  closeNav();
+}
+const firstPage = s => s.pages && s.pages[0] ? s.pages[0].id : null;
+function scrollToAnchor(a, smooth) {
+  if (!a) { if (!smooth) window.scrollTo(0, 0); return; }
+  const el = document.getElementById(a);
+  if (el) el.scrollIntoView({ behavior: smooth && !REDUCED ? 'smooth' : 'auto', block: 'start' });
+}
+
+/* ─────────────── sidebar ─────────────── */
+function renderSide() {
+  let h = `<div class="side-group">
+    <a class="side-link${!cur.s ? ' on' : ''}" href="#/"><span class="ic">${fa('fa-house')}</span>Home</a>
+  </div>`;
+  h += `<div class="side-group"><div class="side-label">${esc(GUIDE.name)}</div>${GUIDE.pages.map(p =>
+    `<a class="side-link${cur.s === GUIDE.id && cur.p === p.id ? ' on' : ''}" href="${routeHref(GUIDE.id, p.id)}"><span class="ic">${fa(p.icon)}</span>${esc(p.title)}</a>`).join('')}</div>`;
+  for (const cat of CATEGORIES) {
+    const list = SCRIPTS.filter(s => s.category === cat.id);
+    if (!list.length) continue;
+    h += `<div class="side-group"><div class="side-label">${esc(cat.name)}</div>`;
+    for (const s of list) {
+      const open = cur.s === s.id;
+      const soon = s.status === 'soon';
+      h += `<a class="side-link script-link${open ? ' open' : ''}${open && soon ? ' on' : ''}" href="${routeHref(s.id)}">
+        <span class="tile">${fa(s.icon)}</span><span class="nm">${esc(s.name)}</span>
+        ${soon ? '<span class="tag">Soon</span>' : `<span class="chev">${fa('fa-chevron-right')}</span>`}</a>`;
+      if (open && !soon) {
+        h += `<div class="sub">${s.pages.map(p => `<a class="side-link${cur.p === p.id ? ' on' : ''}" href="${routeHref(s.id, p.id)}"><span class="ic">${fa(p.icon)}</span>${esc(p.title)}</a>`).join('')}</div>`;
+      }
+    }
+    h += '</div>';
+  }
+  $('#side').innerHTML = h;
+  const on = $('#side .sub .on') || $('#side .side-link.on');
+  if (on) {
+    const sb = $('#side'), r = on.getBoundingClientRect(), sr = sb.getBoundingClientRect();
+    if (r.top < sr.top || r.bottom > sr.bottom) sb.scrollTop += r.top - sr.top - 120;
+  }
+}
+
+/* ─────────────── home ─────────────── */
+function renderHome() {
+  $('#shell').classList.add('wide');
+  codeStore = [];
+  document.title = `${SITE.brand} Docs`;
+  const live = SCRIPTS.filter(s => s.status !== 'soon');
+  let h = `<section class="hero"><div class="hero-in">
+      <h1>Documentation</h1>
+      <p>Install a script, connect it to your framework, and fix problems yourself without waiting on a ticket.</p>
+      <button class="hero-search fr" type="button" data-open-search><div class="in">${fa('fa-magnifying-glass')}<span class="lbl">Search exports, config and errors</span><span class="kbd">${isMac ? '⌘ K' : 'Ctrl K'}</span></div></button>
+      <div class="quick">
+        <a href="${routeHref(GUIDE.id, 'installing')}">${fa('fa-download')}Install your first script</a>
+        <a href="${routeHref(GUIDE.id, 'escrow')}">${fa('fa-lock')}Escrow and entitlement errors</a>
+        <a href="${esc(SITE.discord)}" target="_blank" rel="noopener">${fa('fa-brands fa-discord').replace('fa-solid ', '')}Get help in Discord</a>
+      </div>
+    </div></section>`;
+  for (const cat of CATEGORIES) {
+    const list = SCRIPTS.filter(s => s.category === cat.id).sort((a, b) => (a.status === 'soon') - (b.status === 'soon'));
+    if (!list.length) continue;
+    h += `<section class="cat"><div class="cat-head"><h2>${esc(cat.name)}</h2><p>${esc(cat.desc)}</p></div><div class="grid">`;
+    h += list.map(s => {
+      const soon = s.status === 'soon';
+      const n = (s.pages || []).length;
+      return `<a class="card fr${soon ? ' soon' : ''}" href="${routeHref(s.id)}"><div class="in">
+        <div class="card-top"><div class="tile-lg">${fa(s.icon)}</div><div><h3>${esc(s.name)}</h3><div class="rid">${esc(s.id)}</div></div></div>
+        <p>${inline(s.desc)}</p>
+        <div class="card-foot">${(s.frameworks || []).map(f => `<span class="chip">${esc(f)}</span>`).join('')}
+          <span class="meta">${soon ? '<span class="tag">In development</span>' : `v${esc(s.version)}, ${n} page${n === 1 ? '' : 's'}`}</span></div>
+      </div></a>`;
+    }).join('');
+    h += '</div></section>';
+  }
+  h += `<p class="foot">© ${new Date().getFullYear()} ${esc(SITE.company)}. ${live.length} script${live.length === 1 ? '' : 's'} documented.</p>`;
+  const doc = $('#doc'); doc.innerHTML = h; doc.dataset.rendered = '0';
+  $('#toc').innerHTML = '';
+  window.scrollTo(0, 0);
+}
+
+/* ─────────────── coming soon ─────────────── */
+function renderSoon(s) {
+  $('#shell').classList.add('wide');
+  document.title = `${s.name} | ${SITE.brand} Docs`;
+  $('#doc').innerHTML = `<div style="max-width:780px;margin:0 auto">
+    <div class="crumbs"><a href="#/">Home</a><span class="sep">${fa('fa-chevron-right')}</span><span>${esc(s.name)}</span></div>
+    <div class="page-head"><h1>${esc(s.name)}</h1><p class="lead">${inline(s.desc)}</p></div>
+    ${fr('soon-box', `<div class="tile-lg">${fa(s.icon)}</div><b>Docs land with the release</b><p>This script is still in development. Follow release news in Discord.</p><a class="btn solid" href="${esc(SITE.discord)}" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i>Join the Discord</a>`)}
+  </div>`;
+  $('#doc').dataset.rendered = '0';
+  $('#toc').innerHTML = '';
+  window.scrollTo(0, 0);
+}
+
+/* ─────────────── page ─────────────── */
+function renderPage(s, p) {
+  $('#shell').classList.remove('wide');
+  codeStore = [];
+  document.title = `${p.title} | ${s.name} | ${SITE.brand} Docs`;
+  const pages = s.pages, i = pages.indexOf(p);
+  const prev = pages[i - 1], next = pages[i + 1];
+  const actions = [];
+  if (!s.guide && s.version) actions.push(`<span class="tag teal">v${esc(s.version)}</span>`);
+  actions.push(`<button class="btn" type="button" data-md>${fa('fa-brands fa-markdown').replace('fa-solid ', '')}Copy as GitBook markdown</button>`);
+  if (s.store) actions.push(`<a class="btn" href="${esc(s.store)}" target="_blank" rel="noopener">${fa('fa-cart-shopping')}Buy on Tebex</a>`);
+
+  let h = `<div class="crumbs"><a href="#/">Home</a><span class="sep">${fa('fa-chevron-right')}</span>
+    ${s.guide ? `<span>${esc(s.name)}</span>` : `<a href="${routeHref(s.id)}">${esc(s.name)}</a>`}
+    ${!s.guide && i > 0 ? `<span class="sep">${fa('fa-chevron-right')}</span><span>${esc(p.title)}</span>` : ''}</div>
+    <header class="page-head"><h1>${esc(i === 0 && !s.guide ? s.name : p.title)}</h1>${p.desc ? `<p class="lead">${inline(p.desc)}</p>` : ''}
+    <div class="page-actions">${actions.join('')}</div></header>
+    <article class="prose">${(p.blocks || []).map(block).join('')}</article>`;
+  h += `<nav class="pager">
+    ${prev ? `<a class="pg fr" href="${routeHref(s.id, prev.id)}"><div class="in"><small>Previous</small><b>${esc(prev.title)}</b></div></a>` : ''}
+    ${next ? `<a class="pg fr next" href="${routeHref(s.id, next.id)}"><div class="in"><small>Next</small><b>${esc(next.title)}</b></div></a>` : ''}
+  </nav>`;
+  h += fr('help', `<div class="tx"><b>Still stuck?</b><span>Open a ticket with your server console and F8 errors.</span></div><a class="btn solid" href="${esc(SITE.discord)}" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i>Open a ticket</a>`);
+
+  const doc = $('#doc'); doc.innerHTML = h; doc.dataset.rendered = '1';
+  doc._md = () => toMarkdown(s, p);
+  renderToc(s);
+  requestAnimationFrame(() => scrollToAnchor(cur.a, false));
+}
+
+/* ─────────────── on this page ─────────────── */
+let spy;
+function renderToc(s) {
+  const heads = [...document.querySelectorAll('.prose [data-toc]')];
+  let h = '';
+  if (heads.length) {
+    h += `<div class="toc-t">${fa('fa-bars-staggered')}On this page</div><ul>${heads.map(el =>
+      `<li><a class="${el.dataset.toc === '3' ? 'l3' : ''}" href="${routeHref(cur.s, cur.p, el.id)}" data-for="${el.id}">${esc(el.textContent.replace(/^#/, ''))}</a></li>`).join('')}</ul>`;
+  }
+  h += `<div class="toc-extra">
+    <button type="button" data-md>${fa('fa-copy')}Copy page as markdown</button>
+    <a href="${esc(SITE.discord)}" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i>Ask in Discord</a>
+    <button type="button" data-top>${fa('fa-arrow-up')}Back to top</button>
+  </div>`;
+  $('#toc').innerHTML = h;
+  if (spy) spy.disconnect();
+  if (!heads.length) return;
+  const links = new Map([...document.querySelectorAll('#toc a[data-for]')].map(a => [a.dataset.for, a]));
+  const visible = new Set();
+  spy = new IntersectionObserver(entries => {
+    entries.forEach(e => e.isIntersecting ? visible.add(e.target.id) : visible.delete(e.target.id));
+    let active = null;
+    for (const el of heads) {
+      if (visible.has(el.id)) { active = el.id; break; }
+      if (el.getBoundingClientRect().top < 120) active = el.id;
+    }
+    links.forEach((a, id) => a.classList.toggle('on', id === active));
+  }, { rootMargin: '-70px 0px -65% 0px' });
+  heads.forEach(el => spy.observe(el));
+}
+
+/* ─────────────── search ─────────────── */
+const isMac = /Mac|iPhone|iPad/.test(navigator.platform || navigator.userAgent);
+const INDEX = [];
+function buildIndex() {
+  const plain = t => String(t ?? '').replace(/`|\*\*/g, '').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+  const blockText = b => {
+    if (b.p) return plain(b.p);
+    if (b.list) return b.list.map(plain).join(' ');
+    if (b.hint) return plain((b.title || '') + ' ' + b.text);
+    if (b.code != null) return b.code;
+    if (b.tabs) return b.tabs.map(t => t.code).join(' ');
+    if (b.table) return b.table.rows.map(r => r.map(plain).join(' ')).join(' ');
+    if (b.steps) return b.steps.map(st => plain(st.title + ' ' + (st.text || '')) + ' ' + (st.code || '')).join(' ');
+    if (b.features) return b.features.map(f => f.title + ' ' + f.text).join(' ');
+    if (b.changelog) return b.changelog.map(v => v.version + ' ' + ['added', 'changed', 'fixed', 'removed'].map(k => (v[k] || []).join(' ')).join(' ')).join(' ');
+    return '';
+  };
+  for (const s of ALL) {
+    if (s.status === 'soon') { INDEX.push({ s, title: s.name, crumb: 'In development', text: s.desc, href: routeHref(s.id), icon: s.icon, kind: 'page' }); continue; }
+    for (const p of s.pages) {
+      let sec = { title: p.title, anchor: null, text: plain(p.desc || ''), level: 1 };
+      const secs = [sec];
+      for (const b of p.blocks || []) {
+        if (b.h2 || b.h3) { sec = { title: plain(b.h2 || b.h3), anchor: slug(b.h2 || b.h3), text: '', level: b.h2 ? 2 : 3 }; secs.push(sec); }
+        else sec.text += ' ' + blockText(b);
+      }
+      secs.forEach(x => INDEX.push({
+        s, title: x.level === 1 ? (p === s.pages[0] && !s.guide ? s.name : p.title) : x.title,
+        crumb: x.level === 1 ? s.name : `${s.name} › ${p.title}`,
+        text: x.text.replace(/\s+/g, ' ').trim(), href: routeHref(s.id, p.id, x.anchor),
+        icon: x.level === 1 ? p.icon : 'fa-hashtag', kind: x.level === 1 ? 'page' : 'section',
+      }));
+    }
+  }
+}
+let results = [], sel = 0;
+function mark(text, q) {
+  if (!q) return esc(text);
+  const i = text.toLowerCase().indexOf(q);
+  if (i < 0) return esc(text);
+  return esc(text.slice(0, i)) + '<mark>' + esc(text.slice(i, i + q.length)) + '</mark>' + esc(text.slice(i + q.length));
+}
+function snippet(text, q) {
+  const i = text.toLowerCase().indexOf(q);
+  if (i < 0) return text.slice(0, 90);
+  const st = Math.max(0, i - 30);
+  return (st ? '…' : '') + text.slice(st, st + 100);
+}
+function runSearch(raw) {
+  const q = raw.trim().toLowerCase();
+  const box = $('#skRes');
+  if (!q) {
+    results = INDEX.filter(x => x.kind === 'page' && x.s.status !== 'soon' && (x.s.guide || x.href.split('/').length === 3)).slice(0, 8);
+    const home = results.map(x => ({ ...x, sub: x.crumb }));
+    results = home;
+  } else {
+    const terms = q.split(/\s+/);
+    results = INDEX.map(x => {
+      const t = x.title.toLowerCase(), tn = t.replace(/\s+/g, ''), c2 = x.crumb.toLowerCase(), b = x.text.toLowerCase();
+      let score = 0;
+      for (const w of terms) {
+        if (t.startsWith(w) || tn.startsWith(w)) score += 12; else if (t.includes(w) || tn.includes(w)) score += 8;
+        else if (c2.includes(w)) score += 4; else if (b.includes(w)) score += 2; else return null;
+      }
+      if (x.kind === 'page') score += 1;
+      return { ...x, score, sub: b.includes(terms[0]) && !t.includes(terms[0]) ? snippet(x.text, terms[0]) : x.crumb };
+    }).filter(Boolean).sort((a, b) => b.score - a.score).slice(0, 24);
+  }
+  sel = 0;
+  if (!results.length) {
+    box.innerHTML = `<div class="sk-empty"><b>Nothing matches "${esc(raw.trim())}"</b>Try an export name, a config key or the error text.</div>`;
+    return;
+  }
+  const first = q ? q.split(/\s+/)[0] : '';
+  box.innerHTML = (q ? '' : '<div class="sk-grp">Jump to</div>') + results.map((x, i) => `
+    <a class="sk-it${i ? '' : ' on'}" href="${x.href}" data-i="${i}">
+      <span class="tile">${fa(x.icon)}</span>
+      <span class="tx"><b>${mark(x.title, first)}</b><span>${mark(x.sub, first)}</span></span>
+      <span class="ret">${fa('fa-arrow-turn-down')}</span>
+    </a>`).join('');
+}
+function moveSel(d) {
+  const items = [...document.querySelectorAll('.sk-it')];
+  if (!items.length) return;
+  sel = (sel + d + items.length) % items.length;
+  items.forEach((el, i) => el.classList.toggle('on', i === sel));
+  items[sel].scrollIntoView({ block: 'nearest' });
+}
+function openSearch() {
+  const sk = $('#sk'); sk.hidden = false;
+  const inp = $('#skInput'); inp.value = ''; runSearch('');
+  setTimeout(() => inp.focus(), 10);
+  if (!REDUCED) $('.sk-box').animate([{ opacity: 0, transform: 'translateY(-8px) scale(.99)' }, { opacity: 1, transform: 'none' }], { duration: 180, easing: 'cubic-bezier(.2,.8,.2,1)' });
+}
+function closeSearch() { $('#sk').hidden = true; }
+
+/* ─────────────── nav drawer ─────────────── */
+function closeNav() { document.body.classList.remove('nav-open'); }
+
+/* ─────────────── theme ─────────────── */
+function currentTheme() {
+  return document.documentElement.dataset.theme || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+}
+function syncThemeIcon() {
+  const b = $('#themeBtn');
+  if (b) b.innerHTML = fa(currentTheme() === 'dark' ? 'fa-sun' : 'fa-moon');
+}
+
+/* ─────────────── events ─────────────── */
+document.addEventListener('click', async e => {
+  const t = e.target;
+  const cp = t.closest('[data-copy]');
+  if (cp) {
+    const ok = await copyText(codeStore[+cp.dataset.copy]);
+    const lbl = cp.querySelector('span');
+    cp.classList.toggle('done', ok);
+    if (lbl) lbl.textContent = ok ? 'Copied' : 'Select and copy';
+    setTimeout(() => { cp.classList.remove('done'); if (lbl) lbl.textContent = 'Copy'; }, 1600);
+    return;
+  }
+  const tab = t.closest('.tab');
+  if (tab) {
+    const box = tab.closest('.code');
+    const i = +tab.dataset.tab;
+    box.querySelectorAll('.tab').forEach(b => b.classList.toggle('on', b === tab));
+    box.querySelectorAll('.pane').forEach(p => { p.hidden = +p.dataset.pane !== i; });
+    const cpb = box.querySelector('[data-copies]');
+    cpb.dataset.copy = cpb.dataset.copies.split(',')[i];
+    return;
+  }
+  if (t.closest('[data-md]')) {
+    const fn = $('#doc')._md;
+    if (fn && await copyText(fn())) toast('Markdown copied, paste it into GitBook');
+    return;
+  }
+  if (t.closest('[data-top]')) { window.scrollTo({ top: 0, behavior: REDUCED ? 'auto' : 'smooth' }); return; }
+  if (t.closest('[data-open-search]')) { openSearch(); return; }
+});
+$('#searchTop').addEventListener('click', openSearch);
+$('#skClose').addEventListener('click', closeSearch);
+$('#sk').addEventListener('click', e => { if (e.target.id === 'sk') closeSearch(); });
+$('#skRes').addEventListener('click', e => { if (e.target.closest('.sk-it')) closeSearch(); });
+$('#skRes').addEventListener('mousemove', e => {
+  const it = e.target.closest('.sk-it'); if (!it || +it.dataset.i === sel) return;
+  sel = +it.dataset.i; document.querySelectorAll('.sk-it').forEach((el, i) => el.classList.toggle('on', i === sel));
+});
+$('#skInput').addEventListener('input', e => runSearch(e.target.value));
+$('#skInput').addEventListener('keydown', e => {
+  if (e.key === 'ArrowDown') { e.preventDefault(); moveSel(1); }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); moveSel(-1); }
+  else if (e.key === 'Enter') { const it = document.querySelectorAll('.sk-it')[sel]; if (it) { location.hash = it.getAttribute('href'); closeSearch(); } }
+});
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); $('#sk').hidden ? openSearch() : closeSearch(); }
+  else if (e.key === '/' && $('#sk').hidden && !/input|textarea/i.test(document.activeElement.tagName)) { e.preventDefault(); openSearch(); }
+  else if (e.key === 'Escape') { if (!$('#sk').hidden) closeSearch(); else closeNav(); }
+});
+$('#menuBtn').addEventListener('click', () => document.body.classList.toggle('nav-open'));
+$('#scrim').addEventListener('click', closeNav);
+window.addEventListener('hashchange', route);
+
+/* ─────────────── boot ─────────────── */
+$('#brandName').textContent = SITE.brand;
+$('#kbdHint').textContent = isMac ? '⌘ K' : 'Ctrl K';
+$('#topLinks').innerHTML = `
+  <button class="icon-btn search-icon-btn" type="button" data-open-search aria-label="Search">${fa('fa-magnifying-glass')}</button>
+  <a class="tl" href="${esc(SITE.website)}" target="_blank" rel="noopener">${fa('fa-globe')}<span class="t">Website</span></a>
+  <a class="tl" href="${esc(SITE.store)}" target="_blank" rel="noopener">${fa('fa-cart-shopping')}<span class="t">Store</span></a>
+  <a class="tl discord" href="${esc(SITE.discord)}" target="_blank" rel="noopener"><i class="fa-brands fa-discord"></i><span class="t">Discord</span></a>
+  <button class="icon-btn" id="themeBtn" type="button" aria-label="Switch theme"></button>`;
+$('#themeBtn').addEventListener('click', () => {
+  const next = currentTheme() === 'dark' ? 'light' : 'dark';
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem('nz-docs-theme', next); } catch (e) {}
+  syncThemeIcon();
+});
+matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', syncThemeIcon);
+syncThemeIcon();
+buildIndex();
+route();
+})();
+</script>
+</body>
+</html>
